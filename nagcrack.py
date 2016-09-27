@@ -17,20 +17,20 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-v", "--verbose", help="Show more output", action="store_true")
 parser.add_argument("string", help="String to be decoded")
 args = parser.parse_args()
-toencode = ''
+todecode = ''
 try:
     if args.verbose: print("Decoding string for the first time... "),
-    toencode = base64.b64decode(args.string)
+    todecode = base64.b64decode(args.string)
     print(Color.OK + "done." + Color.ENDC)
 except binascii.Error:
     print(Color.FAIL + "error.")
     print("No correct base64-encoded string defined." + Color.ENDC)
 if args.verbose: print("Looping through decompressed stringlist... "),
 for i in range(5):
-    toencode = zlib.decompress(toencode)
-    toencode = list(toencode)
-    toencode.reverse()
-    toencode = "".join(toencode)
-    toencode = base64.b64decode(toencode)
+    todecode = zlib.decompress(todecode)
+    todecode = list(todecode)
+    todecode.reverse()
+    todecode = "".join(todecode)
+    todecode = base64.b64decode(todecode)
 print(Color.OK + "done." + Color.ENDC)
-print("\nDecoded string: " + Color.WARNING + toencode + Color.ENDC + "\n")
+print("\nDecoded string: " + Color.WARNING + todecode + Color.ENDC + "\n")
