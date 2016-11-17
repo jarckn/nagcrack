@@ -4,6 +4,7 @@ import argparse
 import zlib
 import base64
 import binascii
+from logging import *
 
 
 class Color:
@@ -18,19 +19,22 @@ parser.add_argument("-v", "--verbose", help="Show more output", action="store_tr
 parser.add_argument("string", help="String to be decoded")
 args = parser.parse_args()
 todecode = ''
+
 try:
     if args.verbose: print("Decoding string for the first time... "),
     todecode = base64.b64decode(args.string)
-    print(Color.OK + "done." + Color.ENDC)
+    print(Color.OK + "DONE" + Color.ENDC)
 except binascii.Error:
-    print(Color.FAIL + "error.")
+    print(Color.FAIL + "ERROR")
     print("No correct base64-encoded string defined." + Color.ENDC)
+
 if args.verbose: print("Looping through decompressed stringlist... "),
+
 for i in range(5):
     todecode = zlib.decompress(todecode)
     todecode = list(todecode)
     todecode.reverse()
     todecode = "".join(todecode)
     todecode = base64.b64decode(todecode)
-print(Color.OK + "done." + Color.ENDC)
+print(Color.OK + "DONE" + Color.ENDC)
 print("\nDecoded string: " + Color.WARNING + todecode + Color.ENDC + "\n")
